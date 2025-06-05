@@ -1,17 +1,20 @@
 FROM nginx:alpine
 
-# Copia arquivos estáticos para a pasta pública
+# Copia os arquivos estáticos para o Nginx
 COPY . /usr/share/nginx/html
 
-# Cria configuração Nginx mínima para servir index.html corretamente
-RUN echo 'server {\n\
-    listen 80;\n\
-    server_name localhost;\n\
-    root /usr/share/nginx/html;\n\
-    index index.html;\n\
-    location / {\n\
-        try_files $uri $uri/ /index.html;\n\
-    }\n\
-}' > /etc/nginx/conf.d/default.conf
+# Cria a configuração nginx corretamente com múltiplas linhas
+RUN cat > /etc/nginx/conf.d/default.conf <<EOF
+server {
+    listen 80;
+    server_name localhost;
+    root /usr/share/nginx/html;
+    index index.html;
+
+    location / {
+        try_files \$uri \$uri/ /index.html;
+    }
+}
+EOF
 
 CMD ["nginx", "-g", "daemon off;"]
