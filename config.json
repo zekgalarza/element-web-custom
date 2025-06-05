@@ -2,7 +2,7 @@
   "default_server_config": {
     "m.homeserver": {
       "base_url": "https://matrix.zekgalarza.com",
-      "server_name": "element-synapse.1dhseh.easypanel.host"
+      "server_name": "matrix.zekgalarza.com"
     }
   },
   "theme": "custom",
