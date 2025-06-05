@@ -1,23 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Element</title>
-    <link rel="stylesheet" href="themes/element/css/element.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title>Element</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <script>
-        // Carrega o config.json externo (obrigatório)
-        fetch("config.json")
-            .then(r => r.json())
-            .then(config => {
-                window.mxConfig = config;
-                const script = document.createElement("script");
-                script.src = "bundles/bundle.js";
-                document.body.appendChild(script);
-            });
-    </script>
-    <div id="matrixchat"></div>
+  <script>
+    fetch("config.json")
+      .then(r => r.json())
+      .then(config => {
+        window.mxConfig = config;
+        const script = document.createElement("script");
+        script.src = "https://app.element.io/bundles/web/element-web.bundle.min.js";
+        document.body.appendChild(script);
+      });
+  </script>
+  <div id="matrixchat"></div>
 </body>
 </html>
