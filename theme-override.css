@@ -1,20 +1,17 @@
-/* Oculta tudo que não for a lista de pessoas */
+/* Oculta salas, espaços e painéis que NÃO são de Pessoas */
 .mx_LeftPanel .mx_SpacePanel,
-.mx_RoomListWrapper,
-.mx_RoomSubList:not(:first-child),  /* Oculta sublistas que não sejam "Pessoas" */
-.mx_LeftPanel .mx_AccessibleButton[aria-label="Explorar espaços"],
-.mx_LeftPanel .mx_AccessibleButton[aria-label="Criar um novo espaço"],
-.mx_LeftPanel .mx_AccessibleButton[aria-label="Abrir configurações"],
-.mx_LeftPanel .mx_AccessibleButton[aria-label="Início"] {
+.mx_RoomList,
+.mx_SpacePanel_toggle,
+.mx_SpacePanel_badge,
+.mx_RoomSubList,
+.mx_RoomListWrapper {
   display: none !important;
 }
 
-/* Reduz a largura da sidebar */
 .mx_LeftPanel {
   width: 72px !important;
 }
 
-/* Ajusta a largura do painel principal */
 .mx_MainSplit {
   margin-left: 72px !important;
 }
