@@ -7,6 +7,9 @@ WORKDIR /app
 RUN apk add --no-cache git \
   && git clone https://github.com/vector-im/element-web.git . \
   && yarn install \
+
+COPY theme-override.css src/theme-override.scss
+
   && yarn build
 
 # Etapa 2: servidor Nginx para servir os arquivos estáticos
