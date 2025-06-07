@@ -8,7 +8,7 @@ RUN apk add --no-cache git
 # Clona o Element Web
 RUN git clone https://github.com/vector-im/element-web.git .
 
-# Substitui o index.html ANTES do build
+# Copia o index.html customizado antes do build
 COPY index.html ./src/vector/index.html
 
 RUN yarn install \
