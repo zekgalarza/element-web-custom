@@ -8,24 +8,21 @@ RUN apk add --no-cache git \
   && git clone https://github.com/vector-im/element-web.git . \
   && yarn install
 
-# Copia SCSS customizado para a raiz do projeto
+# Copia o SCSS customizado
 COPY theme-override.scss theme-override.scss
 
-# Injeta o import no topo do SCSS principal antes do build
-RUN sed -i '1s|^|@import "../theme-override.scss";\n|' src/vector/index.scss \
+# Injeta o SCSS no arquivo principal
+RUN sed -i '1s|^|@import "../theme-override.scss";\n|' src/vector/themes/_custom.scss \
   && yarn build
 
 # Etapa 2: nginx para servir os arquivos
 FROM nginx:alpine
 
-# Copia arquivos do build
 COPY --from=build /app/webapp /usr/share/nginx/html
-
-# Copia arquivos adicionais (opcional)
 COPY config.json /usr/share/nginx/html/config.json
 COPY index.html /usr/share/nginx/html/index.html
 
-# Redirecionamento padrão para SPAs
+# Redirecionamento para SPA
 RUN echo 'server {\n\
   listen 80;\n\
   root /usr/share/nginx/html;\n\
@@ -34,4 +31,3 @@ RUN echo 'server {\n\
 }' > /etc/nginx/conf.d/default.conf
 
 CMD ["nginx", "-g", "daemon off;"]
-
