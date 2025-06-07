@@ -1,7 +1,7 @@
 {
   "default_server_config": {
     "m.homeserver": {
-      "base_url": "https://element.zekgalarza.com",
+      "base_url": "https://matrix.zekgalarza.com",
       "server_name": "matrix.zekgalarza.com"
     }
   },
@@ -11,7 +11,7 @@
       "name": "custom",
       "ui_theme": "light",
       "colors": {},
-      "css_url": "https://element-element-css.1dhseh.easypanel.host/theme-override.css"
+      "css_url": "https://element.zekgalarza.com/theme-override.css"
     }
   ]
 }
