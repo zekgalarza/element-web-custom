@@ -1,24 +1,17 @@
-/* Oculta o botão "Home" (ícone da casa) */
-.mx_SpaceButton_home {
+/* Oculta o botão Home no menu lateral */
+.mx_AsideMenu_actionHome {
   display: none !important;
 }
 
-/* Oculta o botão "+" da barra lateral */
-.mx_LeftPanel .mx_AccessibleButton[aria-label="Adicionar espaço"] {
+/* Oculta o botão de adicionar no menu lateral (botão "+") */
+.mx_AsideMenu .mx_AsideMenu_actionCreateButton {
   display: none !important;
 }
 
-/* Oculta o cabeçalho "Salas" + botão "+" + conteúdo de salas */
+/* Oculta a seção de Salas (rooms) na visualização principal */
 .mx_RoomSubList[aria-label="Salas"],
-.mx_RoomSubList[aria-label="Salas"] + .mx_AccessibleButton,
-.mx_RoomSubList[aria-label="Salas"] + div {
+.mx_RoomSubList[aria-label="Rooms"],
+.mx_RoomSubList[aria-label="Espaços"],
+.mx_RoomSubList[aria-label="Spaces"] {
   display: none !important;
-}
-
-/* (Opcional) reduz largura da sidebar */
-.mx_LeftPanel {
-  width: 72px !important;
-}
-.mx_MainSplit {
-  margin-left: 72px !important;
 }
