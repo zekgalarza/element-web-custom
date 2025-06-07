@@ -6,13 +6,7 @@ WORKDIR /app
 # Instala dependências e clona o projeto
 RUN apk add --no-cache git \
   && git clone https://github.com/vector-im/element-web.git . \
-  && yarn install
-
-# Copia o SCSS customizado para a pasta src
-COPY theme-override.scss src/theme-override.scss
-
-# Importa o SCSS no index.scss antes do build
-RUN echo '\n@import "./theme-override.scss";' >> src/vector/index.scss \
+  && yarn install \
   && yarn build
 
 # Etapa 2: servidor Nginx para servir os arquivos estáticos
@@ -21,9 +15,11 @@ FROM nginx:alpine
 # Copia os arquivos do build para o diretório do Nginx
 COPY --from=build /app/webapp /usr/share/nginx/html
 
-# Copia arquivos customizados
-COPY index.html /usr/share/nginx/html/index.html
-COPY config.json /usr/share/nginx/html/config.json
+# Copia o CSS customizado
+COPY theme-override.css /usr/share/nginx/html/theme-override.css
+
+# Injeta o CSS customizado no <head> do index.html
+RUN sed -i '/<\/head>/i <link rel="stylesheet" href="theme-override.css">' /usr/share/nginx/html/index.html
 
 # Redirecionamento padrão do Nginx para SPA
 RUN echo 'server {\n\
