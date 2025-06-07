@@ -5,9 +5,14 @@ WORKDIR /app
 
 # Instala dependências e clona o projeto
 RUN apk add --no-cache git \
-    && git clone https://github.com/vector-im/element-web.git . \
-    && yarn install \
-    && yarn build
+  && git clone https://github.com/vector-im/element-web.git . \
+  && yarn install
+
+# Copia o config.json personalizado antes do build
+COPY config.json ./webapp/config.json
+
+# Faz o build
+RUN yarn build
 
 # Etapa 2: servidor Nginx para servir os arquivos estáticos
 FROM nginx:alpine
@@ -22,5 +27,3 @@ RUN echo 'server { \
   index index.html; \
   location / { try_files $uri $uri/ /index.html; } \
 }' > /etc/nginx/conf.d/default.conf
-
-
