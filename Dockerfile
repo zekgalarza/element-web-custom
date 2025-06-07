@@ -12,7 +12,7 @@ RUN apk add --no-cache git \
 COPY theme-override.scss src/theme-override.scss
 
 # Importa o SCSS no index.scss antes do build
-RUN echo '\n@import "../theme-override.scss";' >> src/vector/index.scss \
+RUN echo '\n@import "./theme-override.scss";' >> src/vector/index.scss \
   && yarn build
 
 # Etapa 2: servidor Nginx para servir os arquivos estáticos
@@ -21,7 +21,7 @@ FROM nginx:alpine
 # Copia os arquivos do build para o diretório do Nginx
 COPY --from=build /app/webapp /usr/share/nginx/html
 
-# Copia arquivos customizados (opcional)
+# Copia arquivos customizados
 COPY index.html /usr/share/nginx/html/index.html
 COPY config.json /usr/share/nginx/html/config.json
 
@@ -34,6 +34,7 @@ RUN echo 'server {\n\
 }' > /etc/nginx/conf.d/default.conf
 
 CMD ["nginx", "-g", "daemon off;"]
+
 
 
 
