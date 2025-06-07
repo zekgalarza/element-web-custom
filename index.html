@@ -1,15 +1,26 @@
-<script>
-  fetch("config.json")
-    .then((r) => r.json())
-    .then((config) => {
-      window.mxConfig = config;
-      const script = document.createElement("script");
-      script.src = "https://cdn.jsdelivr.net/npm/element-web@latest/bundle.min.js";
-      script.defer = true;
-      document.body.appendChild(script);
-    })
-    .catch((err) => {
-      document.body.innerHTML = "<pre>Erro ao carregar config.json: " + err + "</pre>";
-    });
-</script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Element</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <script>
+      fetch("config.json")
+        .then((r) => r.json())
+        .then((config) => {
+          window.mxConfig = config;
+          const script = document.createElement("script");
+          script.src = "bundles/bundle.js";
+          script.defer = true;
+          document.body.appendChild(script);
+        })
+        .catch((err) => {
+          document.body.innerHTML = "<pre>Erro ao carregar config.json: " + err + "</pre>";
+        });
+    </script>
+    <div id="matrixchat"></div>
+  </body>
+</html>
 
