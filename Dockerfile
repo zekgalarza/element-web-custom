@@ -1,25 +1,26 @@
-# Etapa 1: Build do Element Web
+# Etapa 1: build do Element Web
 FROM node:22-alpine AS build
 
 WORKDIR /app
 
-# Dependências
-RUN apk add --no-cache git
+# Instala dependências e clona o projeto
+RUN apk add --no-cache git \
+    && git clone https://github.com/vector-im/element-web.git . \
+    && yarn install \
+    && yarn build
 
-# Clone do Element Web e substitui o index.html personalizado
-RUN git clone https://github.com/vector-im/element-web.git . \
-  && yarn install \
-  && cp index.html src/index.html \
-  && yarn build
-
-# Etapa 2: Servidor Nginx
+# Etapa 2: servidor Nginx para servir os arquivos estáticos
 FROM nginx:alpine
 
-# Copia o build final para o Nginx
+# Copia os arquivos do build para o diretório do Nginx
 COPY --from=build /app/webapp /usr/share/nginx/html
 
-# Redirecionamento para SPA
-RUN echo 'server {\n  listen 80;\n  root /usr/share/nginx/html;\n  index index.html;\n  location / { try_files $uri $uri/ /index.html; }\n}' > /etc/nginx/conf.d/default.conf
+# Configuração padrão do Nginx para SPA (Single Page Application)
+RUN echo 'server { \
+  listen 80; \
+  root /usr/share/nginx/html; \
+  index index.html; \
+  location / { try_files $uri $uri/ /index.html; } \
+}' > /etc/nginx/conf.d/default.conf
 
-CMD ["nginx", "-g", "daemon off;"]
 
