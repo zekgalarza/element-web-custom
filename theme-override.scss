@@ -1,28 +1,21 @@
-/* Oculta o botão "Home" da barra lateral */
-.mx_LeftPanel .mx_AsideBar .mx_SpaceButton_home {
+/* Oculta o botão "Home" (ícone da casa) */
+.mx_SpaceButton_home {
   display: none !important;
 }
 
-/* Oculta a aba "Salas", botão "+", e conteúdo */
+/* Oculta o botão "+" da barra lateral */
+.mx_LeftPanel .mx_AccessibleButton[aria-label="Adicionar espaço"] {
+  display: none !important;
+}
+
+/* Oculta o cabeçalho "Salas" + botão "+" + conteúdo de salas */
 .mx_RoomSubList[aria-label="Salas"],
-.mx_RoomSubList[aria-label="Salas"] ~ .mx_RoomSubList,
-.mx_RoomSubList[aria-label="Salas"] .mx_AccessibleButton,
-.mx_RoomSubList[aria-label="Salas"] .mx_RoomTile,
-.mx_RoomSubList[aria-label="Salas"] + div,
-.mx_RoomSubList[aria-label="Salas"] + .mx_RoomSubList {
+.mx_RoomSubList[aria-label="Salas"] + .mx_AccessibleButton,
+.mx_RoomSubList[aria-label="Salas"] + div {
   display: none !important;
 }
 
-/* Oculta botões de criar espaços, salas, etc */
-.mx_AccessibleButton[aria-label="Nova conversa"],
-.mx_AccessibleButton[aria-label="Nova sala"],
-.mx_AccessibleButton[aria-label="Novo espaço"],
-.mx_LeftPanel .mx_AccessibleButton,
-.mx_BetaCard {
-  display: none !important;
-}
-
-/* Reduz o tamanho da sidebar lateral e ajusta o painel principal */
+/* (Opcional) reduz largura da sidebar */
 .mx_LeftPanel {
   width: 72px !important;
 }
