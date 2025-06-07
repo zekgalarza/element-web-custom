@@ -8,11 +8,11 @@ RUN apk add --no-cache git \
   && git clone https://github.com/vector-im/element-web.git . \
   && yarn install
 
-# Copia o SCSS customizado
-COPY theme-override.scss theme-override.scss
+# Copia o SCSS customizado para o lugar correto
+COPY theme-override.scss src/vector/theme-override.scss
 
 # Injeta o import no início de styles.scss
-RUN sed -i '1s|^|@import "../theme-override.scss";\n|' src/vector/styles.scss \
+RUN sed -i '1s|^|@import "theme-override.scss";\n|' src/vector/styles.scss \
   && yarn build
 
 # Etapa 2: nginx para servir os arquivos
