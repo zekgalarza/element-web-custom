@@ -3,27 +3,30 @@ FROM node:22-alpine AS build
 
 WORKDIR /app
 
-RUN apk add --no-cache git
+RUN apk add --no-cache git \
+  && git clone https://github.com/vector-im/element-web.git . \
+  && yarn install \
+  && yarn build
 
-RUN git clone https://github.com/vector-im/element-web.git . \
-    && yarn install \
-    && yarn build
-
-# Copia o CSS customizado após o build
-COPY theme-override.css /app/webapp/theme-override.css
-
-# Injeta a tag <link> no index.html
-RUN sed -i '/<head>/a <link rel="stylesheet" href="theme-override.css">' /app/webapp/index.html
-
-# Etapa 2: servidor Nginx
+# Etapa 2: servidor Nginx para servir os arquivos estáticos
 FROM nginx:alpine
 
+# Copia o resultado do build
 COPY --from=build /app/webapp /usr/share/nginx/html
 
+# Copia o CSS customizado
+COPY theme-override.css /usr/share/nginx/html/theme-override.css
+
+# Substitui o index.html modificado que injeta o CSS
+COPY index.html /usr/share/nginx/html/index.html
+
+# Configuração padrão do Nginx para SPA
 RUN echo 'server { \
   listen 80; \
   root /usr/share/nginx/html; \
   index index.html; \
   location / { try_files $uri $uri/ /index.html; } \
 }' > /etc/nginx/conf.d/default.conf
+
+CMD ["nginx", "-g", "daemon off;"]
 
