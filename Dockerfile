@@ -10,7 +10,9 @@ RUN apk add --no-cache git \
 
 COPY theme-override.css src/theme-override.scss
 
-  && yarn build
+RUN echo '\n@import "../theme-override.scss";' >> src/vector/index.scss \
+ && yarn build
+
 
 # Etapa 2: servidor Nginx para servir os arquivos estáticos
 FROM nginx:alpine
