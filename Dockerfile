@@ -1,9 +1,7 @@
 FROM nginx:alpine
 
-# Copia os arquivos estáticos para o Nginx
 COPY . /usr/share/nginx/html
 
-# Cria a configuração nginx corretamente com múltiplas linhas
 RUN cat > /etc/nginx/conf.d/default.conf <<EOF
 server {
     listen 80;
@@ -18,3 +16,4 @@ server {
 EOF
 
 CMD ["nginx", "-g", "daemon off;"]
+
