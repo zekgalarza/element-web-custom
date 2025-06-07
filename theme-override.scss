@@ -1,17 +1,24 @@
-/* Oculta salas, espaços e painéis que NÃO são de Pessoas */
+/* Oculta salas, espaços e botões de criação */
 .mx_LeftPanel .mx_SpacePanel,
 .mx_RoomList,
 .mx_SpacePanel_toggle,
 .mx_SpacePanel_badge,
 .mx_RoomSubList,
-.mx_RoomListWrapper {
+.mx_RoomListWrapper,
+.mx_LeftPanel .mx_ButtonGroup,
+.mx_LeftPanel .mx_AccessibleButton, /* "+" lateral */
+.mx_LeftPanel .mx_BetaCard,         /* botão beta */
+.mx_HomePage_header,
+.mx_HomePage_buttonRow,
+.mx_HomePage_createRoomCard,
+.mx_HomePage_exploreCard {
   display: none !important;
 }
 
+/* Redimensiona a sidebar e área principal */
 .mx_LeftPanel {
   width: 72px !important;
 }
-
 .mx_MainSplit {
   margin-left: 72px !important;
 }
