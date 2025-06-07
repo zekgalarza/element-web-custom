@@ -6,13 +6,14 @@ WORKDIR /app
 # Instala dependências e clona o projeto
 RUN apk add --no-cache git \
   && git clone https://github.com/vector-im/element-web.git . \
-  && yarn install \
+  && yarn install
 
-COPY theme-override.css src/theme-override.scss
+# Copia o SCSS customizado para a pasta src
+COPY theme-override.scss src/theme-override.scss
 
+# Importa o SCSS no index.scss antes do build
 RUN echo '\n@import "../theme-override.scss";' >> src/vector/index.scss \
- && yarn build
-
+  && yarn build
 
 # Etapa 2: servidor Nginx para servir os arquivos estáticos
 FROM nginx:alpine
@@ -20,17 +21,19 @@ FROM nginx:alpine
 # Copia os arquivos do build para o diretório do Nginx
 COPY --from=build /app/webapp /usr/share/nginx/html
 
-# Copia os arquivos customizados
-COPY theme-override.css /usr/share/nginx/html/theme-override.css
+# Copia arquivos customizados (opcional)
 COPY index.html /usr/share/nginx/html/index.html
 COPY config.json /usr/share/nginx/html/config.json
 
 # Redirecionamento padrão do Nginx para SPA
-RUN echo 'server { \
-  listen 80; \
-  root /usr/share/nginx/html; \
-  index index.html; \
-  location / { try_files $uri $uri/ /index.html; } \
+RUN echo 'server {\n\
+  listen 80;\n\
+  root /usr/share/nginx/html;\n\
+  index index.html;\n\
+  location / { try_files $uri $uri/ /index.html; }\n\
 }' > /etc/nginx/conf.d/default.conf
+
+CMD ["nginx", "-g", "daemon off;"]
+
 
 
